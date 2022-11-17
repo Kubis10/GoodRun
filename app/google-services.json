@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "683441572521",
+    "project_id": "auth-2b997",
+    "storage_bucket": "auth-2b997.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683441572521:android:99d11651ca73aa6f76f7b8",
+        "android_client_info": {
+          "package_name": "com.przybysz.runapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683441572521-vkqgb6gutc90jvketn4i3duiap7s1qp7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfexsErkaJWWqn53WBV8UXY_3HWJ_R0bY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683441572521-vkqgb6gutc90jvketn4i3duiap7s1qp7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -26,6 +26,7 @@ public class Home extends AppCompatActivity {
 
 
     private Button logout;
+    private Button map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,12 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         logout = (Button) findViewById(R.id.signOut);
+        map = (Button) findViewById(R.id.map);
+
+        map.setOnClickListener(v -> {
+            Intent intent = new Intent(Home.this, MapsActivity.class);
+            startActivity(intent);
+        });
 
         logout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
@@ -40,7 +47,7 @@ public class Home extends AppCompatActivity {
         });
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference = FirebaseDatabase.getInstance("https://auth-2b997-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users");
         userID = user.getUid();
 
         final TextView fullNameTextView = (TextView) findViewById(R.id.fullName);

@@ -81,14 +81,14 @@
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="24dp"
         android:text="Forgot Password?"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/signIn"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="50dp"
-    />
+        app:layout_constraintTop_toBottomOf="@+id/signIn" />
+
     <TextView
         android:id="@+id/register"
         android:layout_width="wrap_content"

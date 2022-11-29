@@ -110,21 +110,19 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         User user = new User(fullName, email);
-                        FirebaseDatabase.getInstance().getReference("Users")
+
+                        FirebaseDatabase.getInstance("https://auth-2b997-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users")
                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    Toast.makeText(Register.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
-                                    progressBar.setVisibility(View.GONE);
-                                    startActivity(new Intent(Register.this, MainActivity.class));
-                                } else {
-                                    Toast.makeText(Register.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
-                            }
-                        });
+                                .setValue(user).addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()){
+                                        Toast.makeText(Register.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
+                                        progressBar.setVisibility(View.GONE);
+                                        startActivity(new Intent(Register.this, MainActivity.class));
+                                    } else {
+                                        Toast.makeText(Register.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
                     } else {
                         Toast.makeText(Register.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
                         progressBar.setVisibility(View.GONE);

@@ -10,7 +10,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +38,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
         setSupportActionBar(toolbar);
-        drawerLayout = findViewById(R.id.Leyar);
+        drawerLayout = findViewById(R.id.drawer_layout); //Ignore red line errors
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav,
@@ -47,6 +46,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
@@ -54,8 +54,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         reference = FirebaseDatabase.getInstance("https://auth-2b997-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users");
         userID = user.getUid();
 
-        final TextView fullNameTextView = (TextView) findViewById(R.id.fullName);
-        final TextView emailTextView = (TextView) findViewById(R.id.email);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -66,8 +64,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                     String name = userProfile.fullName;
                     String email = userProfile.email;
 
-                    fullNameTextView.setText(name);
-                    emailTextView.setText(email);
+                    TextView textViewName = findViewById(R.id.fullName);
+                    TextView textViewEmail = findViewById(R.id.email);
+
+                    textViewName.setText(name);
+                    textViewEmail.setText(email);
                 }
             }
 
@@ -82,12 +83,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
-                Intent intent = new Intent(this, Home.class);
-                startActivity(intent);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
                 break;
             case R.id.nav_map:
-                Intent intent2 = new Intent(Home.this, MapsActivity.class);
-                startActivity(intent2);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapsFragment()).commit();
                 break;
             case R.id.nav_about:
                 //Intent intent3 = new Intent(this, About.class);

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
 
         forgotPassword = (TextView) findViewById(R.id.forgotPassword);
-
+        forgotPassword.setOnClickListener(this);
     }
 
     @Override

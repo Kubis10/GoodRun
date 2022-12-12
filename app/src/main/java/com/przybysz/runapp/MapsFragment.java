@@ -204,37 +204,38 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback{
                     1);
         } else {
             mMap.setMyLocationEnabled(true);
-        }
+            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            Location location = locationManager.getLastKnownLocation(provider);
 
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
-        Location location = locationManager.getLastKnownLocation(provider);
 
-        if (location != null) {
-            LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
-        }
-        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location location) {
+            if (location != null) {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                if(running){
-                    points.add(userLocation);
-                    Polyline line = mMap.addPolyline(new PolylineOptions()
-                            .addAll(points)
-                            .width(5)
-                            .color(Color.RED));
-                    distanceView.setText(getTotalDistance(points));
-                    stepsView.setText(getSpeed(totalDistance, seconds));
-                }
-                else {
-                    points.clear();
-                }
-                moveCamera(mMap, userLocation, 15);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
             }
-        });
+            mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+                @Override
+                public void onMyLocationChange(Location location) {
+                    LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                    if(running){
+                        points.add(userLocation);
+                        Polyline line = mMap.addPolyline(new PolylineOptions()
+                                .addAll(points)
+                                .width(5)
+                                .color(Color.RED));
+                        distanceView.setText(getTotalDistance(points));
+                        stepsView.setText(getSpeed(totalDistance, seconds));
+                    }
+                    else {
+                        points.clear();
+                    }
+                    moveCamera(mMap, userLocation, 15);
+                }
+            });
+
+        }
     }
     public void moveCamera(GoogleMap map, LatLng latLng, float zoomLevel) {
         CameraPosition cameraPosition = new CameraPosition.Builder()

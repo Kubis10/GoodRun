@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         progressBar.setVisibility(View.VISIBLE);
+        progressBar.bringToFront();
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
@@ -99,9 +100,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     user.sendEmailVerification();
                     Toast.makeText(MainActivity.this, "Check your email to verify your account!", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             } else{
                 Toast.makeText(MainActivity.this, "Failed to login! Please check your credentials", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
